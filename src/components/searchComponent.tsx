@@ -8,12 +8,12 @@ import {
 } from "@/components/ui/command";
 import { WeatherData } from "@/interfaces";
 import axios from "axios";
-import { Dispatch, SetStateAction, useState } from "react";
-import { cityLocalityData } from "../../public/cityLocalityData";
-import { ClockArrowDownIcon, Info, Loader, X } from "lucide-react";
-import MotionDiv from "./framer-motion/MotionDiv";
 import { AnimatePresence } from "framer-motion";
+import { Info, Loader, X } from "lucide-react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { toast } from "sonner";
+import { cityLocalityData } from "../../public/cityLocalityData";
+import MotionDiv from "./framer-motion/MotionDiv";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 
 
@@ -25,11 +25,12 @@ const SearchComponent = ({ setWeatherData, setShowWeather }: { setWeatherData: D
 
     const fetchWeatherData = async (localityId: string): Promise<void> => {
         setLoading(true);
+
         const options = {
             method: 'GET',
-            url: 'https://www.weatherunion.com/gw/weather/external/v0/get_locality_weather_data',
+            url: process.env.NEXT_PUBLIC_WEATHER_API_URL,
             params: { locality_id: localityId },
-            headers: { 'X-Zomato-Api-Key': '5d479c00ceaaf092f74d1dac5ad1281b' }
+            headers: { 'X-Zomato-Api-Key': process.env.NEXT_PUBLIC_ZOMATO_API_KEY }
         };
 
         try {
