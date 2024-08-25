@@ -1,108 +1,106 @@
-"use client"
-import {
-    Command,
-    CommandEmpty,
-    CommandInput,
-    CommandItem,
-    CommandList
-} from "@/components/ui/command";
-import { WeatherData } from "@/interfaces";
-import axios from "axios";
+"use client";
+import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { fetchWeatherData } from "@/services/weatherService";
+import { WeatherData } from "@/types/types";
 import { AnimatePresence } from "framer-motion";
 import { Info, Loader, X } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
 import { toast } from "sonner";
-import { cityLocalityData } from "../../public/cityLocalityData";
+import { cityLocalityData } from "../data/cityLocalityData";
 import MotionDiv from "./framer-motion/MotionDiv";
+import { Button } from "./ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTrigger } from "./ui/dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 
-
 const SearchComponent = ({ setWeatherData, setShowWeather }: { setWeatherData: Dispatch<SetStateAction<WeatherData>>, setShowWeather: Dispatch<SetStateAction<boolean>> }) => {
-
     const [isFocused, setIsFocused] = useState(false);
     const [loading, setLoading] = useState(false);
     const [searchInput, setSearchInput] = useState<string>("");
 
-    const fetchWeatherData = async (localityId: string): Promise<void> => {
-        setLoading(true);
+    const InfoData = `For now, I have used data only from Mumbai, Pune, and Bangalore cities extracted from the PDF file (Live Weather - A Zomato Giveback - City, Locality List). I converted this data into a JSON format for the app with the help of AI. However if needed, I can include data from all cities in the app.`;
 
-        const options = {
-            method: 'GET',
-            url: process.env.NEXT_PUBLIC_WEATHER_API_URL,
-            params: { locality_id: localityId },
-            headers: { 'X-Zomato-Api-Key': process.env.NEXT_PUBLIC_ZOMATO_API_KEY }
-        };
-
-        try {
-            const { data } = await axios.request(options);
-            console.log('Weather Data:', data);
-            if (data.message === "") {
-                setWeatherData(prevData => ({
-                    ...data.locality_weather_data,
-                    area_name: prevData.area_name
-                }));
-                setShowWeather(true);
-            } else {
-                toast.error("Oops! Data is not available for the selected location. Please check another location or try again later.")
-                setShowWeather(false);
-            }
-            setLoading(false);
-
-        } catch (error) {
-            console.error('Error fetching weather data:', error);
-            toast.error("Oops! Something went wrong while fetching the weather data. Please try again later.")
-            setLoading(false);
-        }
-    };
-
-
-    const handleSelect = (value: string): void => {
+    const handleSelect = async (value: string): Promise<void> => {
         setSearchInput(value);
-        console.log(value);
 
         const selectedLocality = cityLocalityData.find(
             (data) => `${data.cityName} : ${data.localityName}` === value
         );
 
         if (selectedLocality) {
+            setLoading(true);
+
             setWeatherData(prevData => ({
                 ...prevData,
                 area_name: value
             }));
 
-            console.log('Selected Locality ID:', selectedLocality.localityId);
-            fetchWeatherData(selectedLocality.localityId);
+            try {
+                const weatherData = await fetchWeatherData(selectedLocality.localityId);
+                console.log(weatherData);
+                if (weatherData.message === "") {
+                    setWeatherData(prevData => ({
+                        ...weatherData.locality_weather_data,
+                        area_name: prevData.area_name
+                    }));
+                    setShowWeather(true);
+                    if (window.innerWidth < 768) {
+                        window.scrollBy({ top: 500, behavior: 'smooth' });
+                    }
+                } else {
+                    console.log(weatherData);
+                    setShowWeather(false);
+                    toast.error("Data is not currently available for selected location. Please try again later.");
+                }
+
+            } catch (error) {
+                toast.error("Oops! Something went wrong while fetching the weather data. Please try again later.");
+                setShowWeather(false);
+            } finally {
+                setLoading(false);
+            }
         }
     };
-
 
     const clearInput = () => {
         setSearchInput("");
         setShowWeather(false);
     }
 
-
     return (
         <MotionDiv className='pt-8 md:pt-16 font-sans'>
             <Command className="mx-auto rounded-lg w-11/12 h-max">
                 <div className="flex flex-col space-y-5">
                     <div className="ps-3">
-                        <h1 className="mb-2 font-bold text-4xl text-gray-700 tracking-tighter">Weather Tracker</h1>
-                        <div className="flex md:flex-row flex-col md:items-center md:space-x-2 space-y-2">
-                            <p className="text-lg text-slate-600 tracking-wider">Get real-time weather updates for any location.</p>
+                        <h1 className="mb-2 font-bold text-3xl text-gray-700 md:text-4xl tracking-tight md:tracking-tighter">Weather Tracker</h1>
+                        <div className="flex space-x-2">
+                            <p className="text-slate-600 md:text-lg tracking-wider">Get real-time weather updates for any location.</p>
                             <TooltipProvider>
                                 <Tooltip>
-                                    <TooltipTrigger>
+                                    <TooltipTrigger className="md:block hidden">
                                         <span><Info className="opacity-50 hover:opacity-100 transition-opacity duration-75 cursor-pointer size-5" /></span>
                                     </TooltipTrigger>
                                     <TooltipContent >
-                                        <div className="w-52">
-                                            <p>For now, Only data from Mumbai, Pune, and Bangalore cities has been used in App. The information for all cities was initially available in a PDF file (Live Weather - A Zomato Giveback - City, Locality List). To use this data in the app, I decided to extract and convert it into a JSON format (Thanks to AI). However, if needed I can include data from all cities in the app.</p>
+                                        <div className="p-2 w-60">
+                                            <p className="text-muted-foreground tracking-wide">{InfoData}</p>
                                         </div>
                                     </TooltipContent>
                                 </Tooltip>
                             </TooltipProvider>
                         </div>
+
+
+                        <Dialog >
+                            <DialogTrigger className="flex items-center md:hidden mt-3 px-2 py-1 border rounded-md"> <Info className="opacity-50 hover:opacity-100 transition-opacity duration-75 cursor-pointer me-2 size-4" />Info </DialogTrigger>
+                            <DialogContent className="rounded-md w-11/12">
+                                <DialogHeader>
+                                    <DialogDescription>
+                                        {InfoData}
+                                    </DialogDescription>
+                                </DialogHeader>
+                            </DialogContent>
+                        </Dialog>
+
+
                     </div>
                     <div className="relative">
                         <CommandInput
@@ -110,15 +108,14 @@ const SearchComponent = ({ setWeatherData, setShowWeather }: { setWeatherData: D
                             value={searchInput}
                             onValueChange={(search: string) => setSearchInput(search)}
                             onFocus={() => setIsFocused(true)}
-                        // onBlur={() => setIsFocused(false)}
                         />
                         {searchInput && <X onClick={clearInput} className="absolute inset-y-3 opacity-60 h-5 cursor-pointer end-4" />}
                     </div>
                 </div>
-
                 {isFocused && (
                     <AnimatePresence>
                         <MotionDiv>
+
                             <CommandList className="mx-2 mt-1 border rounded-md max-h-72" >
                                 <CommandEmpty>No results found.</CommandEmpty>
                                 {cityLocalityData.map((item) => {
@@ -134,6 +131,7 @@ const SearchComponent = ({ setWeatherData, setShowWeather }: { setWeatherData: D
                                     );
                                 })}
                             </CommandList>
+
                         </MotionDiv>
                     </AnimatePresence>
                 )}
@@ -141,9 +139,8 @@ const SearchComponent = ({ setWeatherData, setShowWeather }: { setWeatherData: D
                 {loading && <div className="flex m-4"><span> <Loader className="animate-spin me-2" /></span> Loading...</div>}
 
             </Command>
-
         </MotionDiv>
     )
 }
 
-export default SearchComponent
+export default SearchComponent;

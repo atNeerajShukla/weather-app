@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Weather Tracker Application
+
+## Overview
+
+Welcome to the Weather Tracker Application! This application provides real-time weather updates for various localities using the latest web technologies, ensuring a smooth and responsive user experience. 
+
+## Technologies Used
+
+- **Next.js**: A powerful React framework for server-side rendering and generating static websites.
+- **TypeScript**: A statically typed language that enhances JavaScript, providing type safety and better developer experience.
+- **Tailwind CSS**: A utility-first CSS framework for rapid UI development.
+- **Framer Motion**: An animation library for React that powers smooth transitions and animations.
+- **Redux**: A predictable state container for managing the application's state.
+- **Shadcn**: For modern and accessible UI components.
+
+## Features
+
+- **Real-time Weather Data**: Fetches and displays live weather information for specific localities.
+- **Responsive Design**: Built using Tailwind CSS, ensuring the app looks great on all devices.
+- **Smooth Animations**: Framer Motion is utilized to add sleek and modern animations.
+- **Type Safety**: TypeScript is used to minimize runtime errors and improve code quality.
+- **State Management**: Redux is used for managing the state effectively across the app.
+
+## Deployment
+
+The application is deployed on [Vercel](https://vercel.com/), providing fast and reliable hosting for modern web apps.
 
 ## Getting Started
 
-First, run the development server:
+To get started with the project locally:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/your-username/your-repo-name.git
+    ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install the dependencies:
+    ```bash
+    npm install
+    ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Run the development server:
+    ```bash
+    npm run dev
+    ```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+4. Open your browser and navigate to `http://localhost:3000` to see the app in action.
 
-## Learn More
+## Live Application
 
-To learn more about Next.js, take a look at the following resources:
+You can view the live application [here](https://xyz.vercel.app/).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Author
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Created by **Neeraj Shukla**. You can find more about my work on my [portfolio](https://www.ironycoder.com).

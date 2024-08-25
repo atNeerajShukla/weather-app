@@ -1,4 +1,4 @@
-import { WeatherData } from '@/interfaces';
+import { WeatherData } from '@/types/types';
 import { AnimatePresence } from 'framer-motion';
 import { CloudRain, CloudSunIcon, Compass, Droplet, StarIcon, Thermometer, Wind } from 'lucide-react'; // Importing Lucide icons
 import { ReactNode } from 'react';
@@ -71,7 +71,7 @@ const WeatherComponent = ({ weatherData, showWeather }: { weatherData: WeatherDa
                 </MotionDiv>
                 :
                 <AnimatePresence>
-                    <MotionDiv className="flex flex-col items-center gap-4 bg-gradient-to-r from-slate-50 to-blue-100 shadow-xl mx-auto p-6 rounded-3xl w-11/12 max-w-md text-base text-center text-gray-800 tracking-wide">
+                    <MotionDiv className="flex flex-col items-center gap-4 shadow-xl mx-auto p-6 rounded-3xl w-11/12 max-w-md text-base text-center text-gray-800 tracking-wide primary-gradient">
                         <CloudSunIcon className="mb-2 w-14 h-14 text-blue-500 animate-pulse" />
                         <p className="font-medium text-lg tracking-wide">
                             Discover real-time weather updates in your area. Just type in your location and stay informed!

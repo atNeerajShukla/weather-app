@@ -2,7 +2,7 @@
 
 import SearchComponent from "@/components/searchComponent";
 import WeatherComponent from "@/components/weatherComponent";
-import { WeatherData } from "@/interfaces";
+import { WeatherData } from "@/types/types";
 import { useState } from "react";
 
 export default function Home() {
@@ -22,7 +22,7 @@ export default function Home() {
 
   return (
     <main>
-      <div className="grid md:grid-cols-2 min-h-screen">
+      <div className="grid md:grid-cols-2 md:min-h-screen">
         <SearchComponent setWeatherData={setWeatherData} setShowWeather={setShowWeather} />
         <WeatherComponent weatherData={weatherData} showWeather={showWeather} />
       </div>

@@ -1,5 +1,5 @@
 import { motion, MotionProps } from 'framer-motion';
-import { ReactNode, Reference, RefObject } from 'react';
+import { ReactNode, RefObject } from 'react';
 
 interface MotionDivProps extends MotionProps {
     children: ReactNode;

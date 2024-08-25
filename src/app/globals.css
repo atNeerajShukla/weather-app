@@ -73,4 +73,8 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  .primary-gradient {
+    @apply bg-gradient-to-r from-slate-100 to-zinc-100;
+  }
 }
