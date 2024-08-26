@@ -1,4 +1,5 @@
-import { WeatherData } from '@/types/types';
+import { useAppSelector } from '@/lib/store/hooks';
+import { RootState } from '@/lib/store/store';
 import { AnimatePresence } from 'framer-motion';
 import { CloudRain, CloudSunIcon, Compass, Droplet, Thermometer, Wind } from 'lucide-react'; // Importing Lucide icons
 import { ReactNode } from 'react';
@@ -14,7 +15,10 @@ const WeatherDetail = ({ icon, label, value }: { icon: ReactNode, label: string,
     </div>
 );
 
-const WeatherComponent = ({ weatherData, showWeather }: { weatherData: WeatherData, showWeather: boolean }) => {
+const WeatherCardComponent = () => {
+
+    const weatherData = useAppSelector((state: RootState) => state.weatherData.weatherData);
+    const showWeather = useAppSelector((state: RootState) => state.weatherData.showWeather);
 
     return (
         <div className='flex items-center my-10 md:my-0 font-sans'>
@@ -81,4 +85,4 @@ const WeatherComponent = ({ weatherData, showWeather }: { weatherData: WeatherDa
     );
 };
 
-export default WeatherComponent;
+export default WeatherCardComponent;

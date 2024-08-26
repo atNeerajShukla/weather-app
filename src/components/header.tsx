@@ -1,6 +1,5 @@
 import { CloudSun } from "lucide-react"
 
-
 const Header = () => {
     return (
             <header className="shadow-md py-5 primary-gradient">

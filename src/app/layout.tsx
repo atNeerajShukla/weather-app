@@ -1,9 +1,8 @@
+import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Footer from "@/components/footer";
-import Header from "@/components/header";
-import { Toaster } from "@/components/ui/sonner";
+import StoreProvider from "./StoreProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,10 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        {children}
-        <Toaster />
-      </body>
+      <StoreProvider>
+        <body className={inter.className}>
+          {children}
+          <Toaster />
+        </body>
+      </StoreProvider>
     </html>
   );
 }

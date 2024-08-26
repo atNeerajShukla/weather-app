@@ -1,21 +1,22 @@
 "use client";
 import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { setShowWeather, setWeatherData, updateWeatherData } from "@/lib/store/features/weather/weatherDataSlice";
+import { useAppDispatch } from "@/lib/store/hooks";
 import { fetchWeatherData } from "@/services/weatherService";
-import { WeatherData } from "@/types/types";
 import { AnimatePresence } from "framer-motion";
-import { Cloud, CloudSun, CloudSunIcon, CoffeeIcon, Info, Loader, X } from "lucide-react";
-import { Dispatch, SetStateAction, useState } from "react";
+import { CloudSun, Info, Loader, X } from "lucide-react";
+import { useState } from "react";
 import { toast } from "sonner";
-import { cityLocalityData } from "../data/cityLocalityData";
+import { cityLocalityData } from "../lib/data/cityLocalityData";
 import MotionDiv from "./framer-motion/MotionDiv";
-import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTrigger } from "./ui/dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 
-const SearchComponent = ({ setWeatherData, setShowWeather }: { setWeatherData: Dispatch<SetStateAction<WeatherData>>, setShowWeather: Dispatch<SetStateAction<boolean>> }) => {
+const SearchComponent = () => {
     const [isFocused, setIsFocused] = useState(false);
     const [loading, setLoading] = useState(false);
     const [searchInput, setSearchInput] = useState<string>("");
+    const dispatch = useAppDispatch();
 
     const InfoData = `For now, I have used data only from Mumbai, Pune, and Bangalore cities extracted from the PDF file (Live Weather - A Zomato Giveback - City, Locality List). I converted this data into a JSON format for the app with the help of AI. However if needed, I can include data from all cities in the app.`;
 
@@ -28,33 +29,30 @@ const SearchComponent = ({ setWeatherData, setShowWeather }: { setWeatherData: D
 
         if (selectedLocality) {
             setLoading(true);
-
-            setWeatherData(prevData => ({
-                ...prevData,
-                area_name: value
-            }));
+            dispatch(updateWeatherData({ area_name: value }));
 
             try {
                 const weatherData = await fetchWeatherData(selectedLocality.localityId);
                 console.log(weatherData);
                 if (weatherData.message === "") {
-                    setWeatherData(prevData => ({
+                    dispatch(setWeatherData({
                         ...weatherData.locality_weather_data,
-                        area_name: prevData.area_name
+                        area_name: value
                     }));
-                    setShowWeather(true);
+                    dispatch(setShowWeather(true));
+
                     if (window.innerWidth < 768) {
                         window.scrollBy({ top: 500, behavior: 'smooth' });
                     }
                 } else {
                     console.log(weatherData);
-                    setShowWeather(false);
+                    dispatch(setShowWeather(false));
                     toast.error("Data is not currently available for selected location. Please try again later.");
                 }
 
             } catch (error) {
                 toast.error("Oops! Something went wrong while fetching the weather data. Please try again later.");
-                setShowWeather(false);
+                dispatch(setShowWeather(false));
             } finally {
                 setLoading(false);
             }
@@ -63,7 +61,7 @@ const SearchComponent = ({ setWeatherData, setShowWeather }: { setWeatherData: D
 
     const clearInput = () => {
         setSearchInput("");
-        setShowWeather(false);
+        dispatch(setShowWeather(false));
     }
 
     return (

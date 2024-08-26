@@ -1,34 +1,12 @@
-"use client"
-
 import Footer from "@/components/footer";
 import Header from "@/components/header";
-import SearchComponent from "@/components/searchComponent";
-import WeatherComponent from "@/components/weatherComponent";
-import { WeatherData } from "@/types/types";
-import { useState } from "react";
+import WeatherSearchAndDisplay from "@/components/weatherSearchAndDisplay";
 
 export default function Home() {
-
-  const [showWeather, setShowWeather] = useState(false);
-
-  const [weatherData, setWeatherData] = useState<WeatherData>({
-    area_name: "--",
-    humidity: 0,
-    rain_accumulation: 0,
-    rain_intensity: 0,
-    temperature: 0,
-    wind_direction: 0,
-    wind_speed: 0
-  });
-
-
   return (
     <main className="flex flex-col min-h-screen" >
       <Header />
-      <div className="flex-grow grid md:grid-cols-2 md:my-5">
-        <SearchComponent setWeatherData={setWeatherData} setShowWeather={setShowWeather} />
-        <WeatherComponent weatherData={weatherData} showWeather={showWeather} />
-      </div>
+      <WeatherSearchAndDisplay />
       <Footer />
     </main>
   );
