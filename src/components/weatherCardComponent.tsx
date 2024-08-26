@@ -61,11 +61,11 @@ const WeatherCardComponent = () => {
                             icon={<Wind className="text-blue-500 size-8" />}
                             label="Wind Speed & Direction"
                             value={
-                                <div className='flex items-center'>
+                                <span className='flex items-center'>
                                     {weatherData.wind_speed ?? "--"} km/h
                                     <Compass className="inline-block w-4 h-4 text-blue-500 me-1 ms-3" />
                                     {weatherData.wind_direction ?? "--"}
-                                </div>
+                                </span>
                             }
                         />
                     </div>
