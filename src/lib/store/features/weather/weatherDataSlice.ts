@@ -1,7 +1,7 @@
 import { WeatherData } from '@/types/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface WeatherState {
+type WeatherState = {
     weatherData: WeatherData;
     showWeather: boolean;
 }
