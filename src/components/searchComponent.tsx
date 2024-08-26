@@ -70,8 +70,8 @@ const SearchComponent = ({ setWeatherData, setShowWeather }: { setWeatherData: D
         <MotionDiv className='pt-8 md:pt-16 md:min-h-screen font-sans'>
             <Command className="mx-auto w-11/12">
                 <div className="flex flex-col">
-                    <div className="flex flex-col items-start space-y-4 mb-5 ps-3">
-                        <h1 className="font-bold text-3xl text-gray-700 md:text-4xl tracking-tight md:tracking-tighter">Weather Tracker</h1>
+                    <div className="flex flex-col items-start space-y-3 mb-5 ps-3">
+                        <h1 className="font-bold text-3xl text-gray-600 md:text-4xl tracking-tight md:tracking-tighter">Weather Tracker</h1>
                         <div className="flex space-x-2">
                             <p className="text-slate-600 md:text-lg tracking-wider">Get real-time weather updates for any location.</p>
                             <TooltipProvider>

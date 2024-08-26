@@ -69,8 +69,8 @@ const WeatherComponent = ({ weatherData, showWeather }: { weatherData: WeatherDa
                 :
                 <AnimatePresence>
                     <MotionDiv className="flex flex-col items-center gap-4 shadow-xl mx-auto p-6 rounded-3xl w-11/12 max-w-md text-base text-center text-gray-800 tracking-wide primary-gradient">
-                        <CloudSunIcon className="mb-2 w-14 h-14 text-blue-500 animate-pulse" />
-                        <p className="text-lg text-slate-800 tracking-wide">
+                        <CloudSunIcon className="mb-1 text-blue-500 animate-pulse size-14" />
+                        <p className="text-slate-800 md:text-lg tracking-wide">
                             Discover real-time weather updates in your area. Just type in your location and stay informed!
                         </p>
                     </MotionDiv>
