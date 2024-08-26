@@ -31,7 +31,7 @@ To get started with the project locally:
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/your-username/your-repo-name.git
+    git clone https://github.com/atNeerajShukla/weather-app.git
     ```
 
 2. Install the dependencies:
@@ -48,7 +48,7 @@ To get started with the project locally:
 
 ## Live Application
 
-You can view the live application [here](https://xyz.vercel.app/).
+You can view the live application [here](https://weather-app-git-main-neeraj-shuklas-projects-78b1840d.vercel.app/).
 
 ## Author
 
