@@ -1,5 +1,7 @@
 "use client"
 
+import Footer from "@/components/footer";
+import Header from "@/components/header";
 import SearchComponent from "@/components/searchComponent";
 import WeatherComponent from "@/components/weatherComponent";
 import { WeatherData } from "@/types/types";
@@ -21,11 +23,13 @@ export default function Home() {
 
 
   return (
-    <main>
-      <div className="grid md:grid-cols-2 md:min-h-screen">
+    <main className="flex flex-col min-h-screen" >
+      <Header />
+      <div className="flex-grow grid md:grid-cols-2 md:my-5">
         <SearchComponent setWeatherData={setWeatherData} setShowWeather={setShowWeather} />
         <WeatherComponent weatherData={weatherData} showWeather={showWeather} />
       </div>
+      <Footer />
     </main>
   );
 }

@@ -3,7 +3,7 @@ import { Command, CommandEmpty, CommandInput, CommandItem, CommandList } from "@
 import { fetchWeatherData } from "@/services/weatherService";
 import { WeatherData } from "@/types/types";
 import { AnimatePresence } from "framer-motion";
-import { Info, Loader, X } from "lucide-react";
+import { Cloud, CloudSun, CloudSunIcon, CoffeeIcon, Info, Loader, X } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
 import { toast } from "sonner";
 import { cityLocalityData } from "../data/cityLocalityData";
@@ -67,11 +67,11 @@ const SearchComponent = ({ setWeatherData, setShowWeather }: { setWeatherData: D
     }
 
     return (
-        <MotionDiv className='pt-8 md:pt-16 font-sans'>
-            <Command className="mx-auto rounded-lg w-11/12 h-max">
-                <div className="flex flex-col space-y-5">
-                    <div className="ps-3">
-                        <h1 className="mb-2 font-bold text-3xl text-gray-700 md:text-4xl tracking-tight md:tracking-tighter">Weather Tracker</h1>
+        <MotionDiv className='pt-8 md:pt-16 md:min-h-screen font-sans'>
+            <Command className="mx-auto w-11/12">
+                <div className="flex flex-col">
+                    <div className="flex flex-col items-start space-y-4 mb-5 ps-3">
+                        <h1 className="font-bold text-3xl text-gray-700 md:text-4xl tracking-tight md:tracking-tighter">Weather Tracker</h1>
                         <div className="flex space-x-2">
                             <p className="text-slate-600 md:text-lg tracking-wider">Get real-time weather updates for any location.</p>
                             <TooltipProvider>
@@ -87,8 +87,6 @@ const SearchComponent = ({ setWeatherData, setShowWeather }: { setWeatherData: D
                                 </Tooltip>
                             </TooltipProvider>
                         </div>
-
-
                         <Dialog >
                             <DialogTrigger className="flex items-center md:hidden mt-3 px-2 py-1 border rounded-md"> <Info className="opacity-50 hover:opacity-100 transition-opacity duration-75 cursor-pointer me-2 size-4" />Info </DialogTrigger>
                             <DialogContent className="rounded-md w-11/12">
@@ -99,9 +97,8 @@ const SearchComponent = ({ setWeatherData, setShowWeather }: { setWeatherData: D
                                 </DialogHeader>
                             </DialogContent>
                         </Dialog>
-
-
                     </div>
+
                     <div className="relative">
                         <CommandInput
                             placeholder="Enter city or locality name..."
@@ -111,6 +108,9 @@ const SearchComponent = ({ setWeatherData, setShowWeather }: { setWeatherData: D
                         />
                         {searchInput && <X onClick={clearInput} className="absolute inset-y-3 opacity-60 h-5 cursor-pointer end-4" />}
                     </div>
+
+                    {!isFocused && <CloudSun className="opacity-60 mt-10 text-slate-600 animate-bounce ms-3 size-16" />}
+
                 </div>
                 {isFocused && (
                     <AnimatePresence>
