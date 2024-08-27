@@ -4,6 +4,9 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 type WeatherState = {
     weatherData: WeatherData;
     showWeather: boolean;
+    loading: boolean;
+    searchInput: string;
+    isFocused: boolean;
 }
 
 const initialState: WeatherState = {
@@ -17,9 +20,12 @@ const initialState: WeatherState = {
         wind_speed: 0,
     },
     showWeather: false,
+    loading: false,
+    searchInput: "",
+    isFocused: false,
 };
 
-export const weatherDataSlice = createSlice({
+export const weatherSlice = createSlice({
     name: 'weatherData',
     initialState,
     reducers: {
@@ -32,9 +38,30 @@ export const weatherDataSlice = createSlice({
         setShowWeather: (state, action: PayloadAction<boolean>) => {
             state.showWeather = action.payload;
         },
+        setLoading: (state, action: PayloadAction<boolean>) => {
+            state.loading = action.payload;
+        },
+        setSearchInput: (state, action: PayloadAction<string>) => {
+            state.searchInput = action.payload;
+        },
+        setIsFocused: (state, action: PayloadAction<boolean>) => {
+            state.isFocused = action.payload;
+        },
+        clearSearchInput: (state) => {
+            state.searchInput = "";
+            state.showWeather = false;
+        },
     },
 });
 
-export const { setWeatherData, updateWeatherData, setShowWeather } = weatherDataSlice.actions;
+export const {
+    setWeatherData,
+    updateWeatherData,
+    setShowWeather,
+    setLoading,
+    setSearchInput,
+    setIsFocused,
+    clearSearchInput,
+} = weatherSlice.actions;
 
-export default weatherDataSlice.reducer;
+export default weatherSlice.reducer;
